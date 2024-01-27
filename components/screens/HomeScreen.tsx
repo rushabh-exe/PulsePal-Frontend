@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import StepCounter from '../StepCounter';
 import UserWeight from '../UserWeight';
 import BurnCalories from '../BurnCalories';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; googleUsername: string }) => {
   const [userId, setUserId] = useState('');
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     // Retrieve user_id from AsyncStorage
@@ -21,9 +23,23 @@ const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; g
         console.error('Error fetching user_id from AsyncStorage:', error);
       }
     };
-
+    const fetchUsername = async () => {
+      try {
+        const storedUsername = await AsyncStorage.getItem('name');
+        if (storedUsername) {
+          setUsername(storedUsername);
+          console.log('Username from AsyncStorage:', storedUsername);
+        }
+      } catch (error) {
+        console.error('Error fetching username from AsyncStorage:', error);
+      }
+    };
+    fetchUsername();
     fetchUserId();
   }, []);
+
+  
+  
 
   return (
     <ScrollView>
@@ -34,10 +50,11 @@ const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; g
       </View>
       <View style={styles.part1}>
         <View style={styles.Weeklystat}>
-          <Text>yhe</Text>
+          <Text style={[styles.DefaultText,styles.btnText]}>Update Health</Text>
         </View>
         <View style={styles.rightcontainer}>
-        <Text>yhe</Text>
+          <Text style={styles.DefaultText}>Daily Motivation:xyz</Text>
+        <UserWeight isAuthorized={isAuthorized} />
         </View>
       </View>
       <View style={styles.part2}>
@@ -62,7 +79,7 @@ const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; g
             <Text style={[styles.DefaultText, styles.cardtexttt]}>
               Water Count
             </Text>
-            <Text style={[styles.DefaultText, styles.cardtexttt]}><UserWeight isAuthorized={isAuthorized} /></Text>
+            <Text style={[styles.DefaultText, styles.cardtexttt]}>2L</Text>
           </View>
         </View>
         <View style={styles.statscard}>
@@ -108,23 +125,23 @@ const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; g
 };
 
 const styles = StyleSheet.create({
-  uimage: {
-    height: 60,
-    width: 60,
-    borderRadius: 50,
-    objectFit: 'cover',
-  },
+
   DefaultText: {
     color: 'black',
     textAlign: 'left',
     fontSize: 20,
   },
-  Navbar: {
+ Navbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 5,
+    backgroundColor: 'blue',
+    padding: 10,
+  },
+  uimage: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
   },
   part1: {
     flexDirection: 'row',
@@ -149,6 +166,7 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderRadius: 20,
     gap: 10,
+    height: 190
   },
   part2: {
     flexDirection: 'column',
@@ -184,6 +202,12 @@ const styles = StyleSheet.create({
   cardtexttt: {
     fontSize: 24,
   },
+  btnText:{
+    fontSize: 25,
+    backgroundColor: 'orange',
+    padding: 10,
+    color: 'white',
+  }
 });
 
 export default HomeScreen;

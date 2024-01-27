@@ -43,8 +43,8 @@ const StepCounter = ({ isAuthorized }: { isAuthorized: boolean }) => {
   useEffect(() => {
     if (isAuthorized) {
       fetchDailySteps();
-      // const intervalId = setInterval(fetchDailySteps, 2000);
-      // return () => clearInterval(intervalId);
+      const intervalId = setInterval(fetchDailySteps, 2000);
+      return () => clearInterval(intervalId);
     }
   }, [isAuthorized]);
 

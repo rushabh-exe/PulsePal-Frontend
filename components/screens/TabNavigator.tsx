@@ -1,4 +1,4 @@
-// components/TabNavigator.tsx
+
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './HomeScreen';
@@ -16,7 +16,7 @@ const TabNavigator = ({ isAuthorized }: { isAuthorized: boolean }) => {
       </Tab.Screen>
       <Tab.Screen name="Leaderboard" component={LeaderboardScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Userlist" component={UserList}/>
+      {/* <Tab.Screen name="Userlist" component={UserList}/> */}
     </Tab.Navigator>
   );
 };

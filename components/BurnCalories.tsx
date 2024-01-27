@@ -37,8 +37,8 @@ const BurnCalories = ({isAuthorized}: {isAuthorized: boolean}) => {
   useEffect(() => {
     if (isAuthorized) {
       fetchDailyCalories();
-      // const intervalId = setInterval(fetchDailyCalories, 10000);
-      // return () => clearInterval(intervalId);
+      const intervalId = setInterval(fetchDailyCalories, 10000);
+      return () => clearInterval(intervalId);
     }
   }, [isAuthorized]);
 

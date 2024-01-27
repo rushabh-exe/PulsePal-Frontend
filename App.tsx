@@ -63,6 +63,35 @@ const App = () => {
         if (response.data.user_id) {
           // Store user id in AsyncStorage
           storeUserIdInAsyncStorage(String(response.data.user_id));
+          StoreUserNameAsyncStorage(String(response.data.name));
+        }
+
+      } else {
+        console.error('Unexpected server response:', response);
+      }
+    } catch (error) {
+      console.error('Error sending data to the server:', error);
+    }
+  };
+  const Profile = async () => {
+    try {
+      const response = await axios.post('http://192.168.65.84:9876/profile', {
+        name,
+        email,
+        points,
+        wins,
+      });
+  
+      if (response.status === 200) {
+        console.log('Server response:', response.data);
+
+        // Check if user_id is present in the response
+        if (response.data.user_id) {
+          // Store user id in AsyncStorage
+          storeUserIdInAsyncStorage(String(response.data.email));
+          StoreUserNameAsyncStorage(String(response.data.name));
+          StoreUserNameAsyncStorage(String(response.data.points));
+          StoreUserNameAsyncStorage(String(response.data.wins));
         }
 
       } else {
@@ -77,6 +106,16 @@ const App = () => {
     try {
       await AsyncStorage.setItem('user_id', userId);
       console.log('User ID stored in AsyncStorage:', userId);
+    } catch (error) {
+      console.error('Error storing user ID in AsyncStorage:', error);
+    }
+  };
+  
+
+  const StoreUserNameAsyncStorage = async (name: string) => {
+    try {
+      await AsyncStorage.setItem('name', name);
+      console.log('User ID stored in AsyncStorage:', name);
     } catch (error) {
       console.error('Error storing user ID in AsyncStorage:', error);
     }
