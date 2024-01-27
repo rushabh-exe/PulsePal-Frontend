@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
 import StepCounter from '../StepCounter';
 import UserWeight from '../UserWeight';
 import BurnCalories from '../BurnCalories';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; googleUsername: string }) => {
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    // Retrieve user_id from AsyncStorage
+    const fetchUserId = async () => {
+      try {
+        const storedUserId = await AsyncStorage.getItem('user_id');
+        if (storedUserId) {
+          setUserId(storedUserId);
+          console.log('User ID from AsyncStorage:', storedUserId);
+        }
+      } catch (error) {
+        console.error('Error fetching user_id from AsyncStorage:', error);
+      }
+    };
+
+    fetchUserId();
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.Navbar}>
         <Image style={styles.uimage} source={require('../../static/th.jpeg')} />
-        <Text style={styles.DefaultText}>{googleUsername}</Text>
+        <Text style={styles.DefaultText}>{userId}</Text>
         <Text style={styles.DefaultText}>Settings</Text>
       </View>
       <View style={styles.part1}>

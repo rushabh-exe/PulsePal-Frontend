@@ -15,10 +15,10 @@ const LeaderboardScreen = () => {
           </View> 
           {[...Array(40).keys()].map(index => (
             <View key={index} style={[styles.row,styles.rowcard]}>
-              <Text style={styles.cell}>1</Text>
-              <Text style={styles.cell}>Player 1</Text>
-              <Text style={styles.cell}>1000</Text>
-              <Text style={styles.cell}>1000</Text>
+              <Text style={styles.cellro}>1</Text>
+              <Text style={styles.cellro}>Player 1</Text>
+              <Text style={styles.cellro}>1000</Text>
+              <Text style={styles.cellro}>1000</Text>
             </View>
           ))}
         </View>
@@ -49,12 +49,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   rowcard:{
-    backgroundColor: "blue",
+    backgroundColor: "white",
+    padding: 3,
+    margin: 3,
+    borderWidth: 4,
+    borderRadius: 4,
+    borderColor: 'blue',
   },
   cell: {
     flex: 1,
     padding: 8,
     color: 'black',
+  },
+  cellro: {
+    flex: 1,
+    padding: 8,
+    color: 'black',
+    fontSize: 22,
   },
   headerCell: {
     backgroundColor: '#f2f2f2',
