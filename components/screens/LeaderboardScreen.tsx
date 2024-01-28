@@ -1,95 +1,61 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ScrollView } from 'react-native';
+import Navbar from '../Navbar';
 
-const LeaderboardScreen = () => {
+const App = () => {
   return (
     <ScrollView>
-      <View style={styles.Navbar}>
-        <Image style={styles.uimage} source={require('../../static/th.jpeg')} />
-        <Text style={styles.DefaultText}>2</Text>
-        <Text style={styles.DefaultText}>Settings</Text>
-      </View>
+      <Navbar/>
       <View style={styles.container}>
+        <View style={styles.search}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search..."
+            placeholderTextColor="#ccc"
+          />
+          <Image source={require('../../static/search.png')} style={styles.searchIcon} />
+        </View>
+
+        <View style={styles.friendlyBetButton}>
+          <Image source={require('../../static/bettingicon.png')} style={styles.buttonImage} />
+          <Text style={styles.buttonText}>Friendly challenge</Text>
+        </View>
+
+        <View style={styles.globalBetButton}>
+          <Image source={require('../../static/globalbet.png')} style={styles.buttonImage} />
+          <Text style={styles.buttonText}>Global challenge</Text>
+        </View>
+
         <Text style={styles.header}>Leaderboard</Text>
+
         <View style={styles.table}>
           <View style={styles.row}>
             <Text style={[styles.cell, styles.headerCell]}>Rank</Text>
             <Text style={[styles.cell, styles.headerCell]}>Name</Text>
-            <Text style={[styles.cell, styles.headerCell]}>calori burnt</Text>
+            <Text style={[styles.cell, styles.headerCell]}>Calories Burnt</Text>
             <Text style={[styles.cell, styles.headerCell]}>Points</Text>
           </View>
-          <View style={[styles.row, styles.rowcard,styles.rowcard1]}>
-            <Text style={styles.cellro}>1</Text>
-            <Text style={styles.cellro}>Ramesh</Text>
-            <Text style={styles.cellro}>1000</Text>
-            <Text style={styles.cellro}>500</Text>
+
+          <View style={[styles.row, styles.rowCard, styles.rowCard1]}>
+            <Text style={styles.cellRo}>1</Text>
+            <Text style={styles.cellRo}>Hanshal</Text>
+            <Text style={styles.cellRo}>1000</Text>
+            <Text style={styles.cellRo}>500</Text>
           </View>
-          <View style={[styles.row, styles.rowcard,styles.rowcard2]}>
-            <Text style={styles.cellro}>2</Text>
-            <Text style={styles.cellro}>suresh</Text>
-            <Text style={styles.cellro}>990</Text>
-            <Text style={styles.cellro}>455</Text>
+          <View style={[styles.row, styles.rowCard, styles.rowCard1]}>
+            <Text style={styles.cellRo}>1</Text>
+            <Text style={styles.cellRo}>Hanshal</Text>
+            <Text style={styles.cellRo}>1000</Text>
+            <Text style={styles.cellRo}>500</Text>
           </View>
-          <View style={[styles.row, styles.rowcard,styles.rowcard3]}>
-            <Text style={styles.cellro}>3</Text>
-            <Text style={styles.cellro}>Paresh</Text>
-            <Text style={styles.cellro}>950</Text>
-            <Text style={styles.cellro}>480</Text>
+          <View style={[styles.row, styles.rowCard, styles.rowCard1]}>
+            <Text style={styles.cellRo}>1</Text>
+            <Text style={styles.cellRo}>Hanshal</Text>
+            <Text style={styles.cellRo}>1000</Text>
+            <Text style={styles.cellRo}>500</Text>
           </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>4</Text>
-            <Text style={styles.cellro}>Ramesh</Text>
-            <Text style={styles.cellro}>1000</Text>
-            <Text style={styles.cellro}>500</Text>
-          </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>5</Text>
-            <Text style={styles.cellro}>suresh</Text>
-            <Text style={styles.cellro}>990</Text>
-            <Text style={styles.cellro}>455</Text>
-          </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>6</Text>
-            <Text style={styles.cellro}>Paresh</Text>
-            <Text style={styles.cellro}>950</Text>
-            <Text style={styles.cellro}>480</Text>
-          </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>7</Text>
-            <Text style={styles.cellro}>Ramesh</Text>
-            <Text style={styles.cellro}>1000</Text>
-            <Text style={styles.cellro}>500</Text>
-          </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>8</Text>
-            <Text style={styles.cellro}>suresh</Text>
-            <Text style={styles.cellro}>990</Text>
-            <Text style={styles.cellro}>455</Text>
-          </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>9</Text>
-            <Text style={styles.cellro}>Paresh</Text>
-            <Text style={styles.cellro}>950</Text>
-            <Text style={styles.cellro}>480</Text>
-          </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>10</Text>
-            <Text style={styles.cellro}>Ramesh</Text>
-            <Text style={styles.cellro}>1000</Text>
-            <Text style={styles.cellro}>500</Text>
-          </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>11</Text>
-            <Text style={styles.cellro}>suresh</Text>
-            <Text style={styles.cellro}>990</Text>
-            <Text style={styles.cellro}>455</Text>
-          </View>
-          <View style={[styles.row, styles.rowcard]}>
-            <Text style={styles.cellro}>12</Text>
-            <Text style={styles.cellro}>Paresh</Text>
-            <Text style={styles.cellro}>950</Text>
-            <Text style={styles.cellro}>480</Text>
-          </View>
+
+          {/* Add more rows as needed */}
         </View>
       </View>
     </ScrollView>
@@ -97,6 +63,23 @@ const LeaderboardScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  navbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#ed6e1f',
+    padding: 10,
+  },
+  userImage: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+  },
+  defaultText: {
+    color: 'black',
+    textAlign: 'left',
+    fontSize: 20,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -104,33 +87,53 @@ const styles = StyleSheet.create({
     color: 'black',
     padding: 3,
   },
-  rowcard1:{
-    backgroundColor: 'gold',
-
-  },
-  rowcard2:{
-    backgroundColor:'silver'
-  },
-  rowcard3:{
-     backgroundColor:'#bc8f8f'
-  },
-
- Navbar: {
+  search: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'blue',
-    padding: 10,
+    marginBottom: 20,
   },
-  uimage: {
-    height: 40,
-    width: 40,
+  searchInput: {
+    flex: 1,
+    padding: 8,
+    marginRight: 5,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    borderWidth: 1,
+  },
+  searchIcon: {
+    height: 35,
+    width: 35,
+  },
+  friendlyBetButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-around',
+    margin: 20,
+    borderColor: '#ed6e1f',
+    borderWidth: 4,
     borderRadius: 20,
   },
-  DefaultText: {
+  globalBetButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-around',
+    margin: 20,
+    borderColor: '#ed6e1f',
+    borderWidth: 4,
+    borderRadius: 20,
+  },
+  buttonImage: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontSize: 18,
     color: 'black',
-    textAlign: 'left',
-    fontSize: 20,
+    fontWeight : '900',
   },
   header: {
     fontSize: 30,
@@ -152,14 +155,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: '#121212',
   },
-  rowcard: {
+  rowCard: {
     backgroundColor: 'white',
     padding: 3,
     margin: 3,
     borderWidth: 4,
     borderRadius: 4,
-    borderColor: 'blue',
-
+    borderColor: '#e14e0f',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: 'black',
   },
-  cellro: {
+  cellRo: {
     padding: 8,
     color: 'black',
     fontSize: 22,
@@ -178,6 +180,9 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontWeight: '900',
   },
+  rowCard1: {
+    backgroundColor: 'gold',
+  },
 });
 
-export default LeaderboardScreen;
+export default App;

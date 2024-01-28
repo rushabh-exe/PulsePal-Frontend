@@ -5,8 +5,20 @@ import UserWeight from '../UserWeight';
 import BurnCalories from '../BurnCalories';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Navbar from '../Navbar';
+import HeartRateMonitor from '../HeartRateMonitor';
 
-const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; googleUsername: string }) => {
+
+axios.get('http://192.168.65.84:9876/users/user_id')
+  .then(response => {
+    console.log(response.data.user_id);
+    console.log(typeof response.data.user_id);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+const HomeScreen = ({ isAuthorized}:{isAuthorized: boolean;}) => {
   const [userId, setUserId] = useState('');
   const [username, setUsername] = useState('');
 
@@ -43,18 +55,14 @@ const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; g
 
   return (
     <ScrollView>
-      <View style={styles.Navbar}>
-        <Image style={styles.uimage} source={require('../../static/th.jpeg')} />
-        <Text style={styles.DefaultText}>{userId}</Text>
-        <Text style={styles.DefaultText}>Settings</Text>
-      </View>
+      <Navbar/>
       <View style={styles.part1}>
         <View style={styles.Weeklystat}>
           <Text style={[styles.DefaultText,styles.btnText]}>Update Health</Text>
         </View>
         <View style={styles.rightcontainer}>
-          <Text style={styles.DefaultText}>Daily Motivation:xyz</Text>
-        <UserWeight isAuthorized={isAuthorized} />
+          <Text style={styles.DefaultText}>Severe obesity may shorten life expectancy by 5 to 20 years.</Text>
+      
         </View>
       </View>
       <View style={styles.part2}>
@@ -91,7 +99,7 @@ const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; g
             <Text style={[styles.DefaultText, styles.cardtexttt]}>
               PulseRate
             </Text>
-            <Text style={[styles.DefaultText, styles.cardtexttt]}>90per/min</Text>
+            <Text style={[styles.DefaultText, styles.cardtexttt]}><HeartRateMonitor isAuthorized={isAuthorized}/>p/m</Text>
           </View>
         </View>
         <View style={styles.statscard}>
@@ -115,8 +123,9 @@ const HomeScreen = ({ isAuthorized, googleUsername }: { isAuthorized: boolean; g
         </View>
         <View style={styles.rightcontainer}>
         <Text style={styles.DefaultText}>Walk to Earn</Text>
-        <Text style={styles.DefaultText}>36/5000</Text>
+        <Text style={styles.DefaultText}><StepCounter isAuthorized={isAuthorized} />/5000</Text>
         <Text style={styles.DefaultText}>Steps to earn</Text>
+        <UserWeight isAuthorized={isAuthorized} />
         </View>
       </View>
       </View>
@@ -131,11 +140,11 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 20,
   },
- Navbar: {
+  Navbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: '#ED6E1F',
     padding: 10,
   },
   uimage: {

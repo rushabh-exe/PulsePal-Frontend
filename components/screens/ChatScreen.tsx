@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,34 +6,79 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
-  Image
 } from 'react-native';
+import Navbar from '../Navbar';
+import axios from 'axios';
 
 function ChatScreen() {
+  const [inputText, setInputText] = useState('');
+  const [messages, setMessages] = useState([
+    { id: 1, text: "Hello, how can I help you?", type: "bot" },
+    // Add more initial chat messages as needed
+  ]);
+
+  const handleSend = async () => {
+    if (inputText.trim() === '') {
+      // Don't send empty messages
+      return;
+    }
+
+    const newUserMessage = { id: messages.length + 1, text: inputText, type: 'user' };
+    setMessages([...messages, newUserMessage]);
+
+    try {
+      const response = await axios.post('http://192.168.65.249:5000/ai/questions', {
+        Pedometer: 2000,
+        CalorieBurnt: 500,
+        WaterCount: 12,
+        HeartRate: 96,
+        currWgt: 100,
+        tgWgt: 80,
+        Question: inputText,
+      }
+      
+      );
+
+      if (response.status === 200 && response.data.response) {
+        const newBotMessage = { id: messages.length + 2, text: response.data.response, type: 'bot' };
+        setMessages([...messages, newBotMessage]);
+      } else {
+        console.error('Unexpected server response:', response);
+      }
+    } catch (error) {
+      console.error('Error sending or receiving messages:', error);
+    }
+
+    setInputText('');
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.Navbar}>
-        <Image style={styles.uimage} source={require('../../static/th.jpeg')} />
-        <Text style={styles.settingsText}>Settings</Text>
-      </View>
+      <Navbar />
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>ChatBot</Text>
       </View>
       <ScrollView contentContainerStyle={styles.chatContainer}>
-        <View style={styles.usertextview}>
-          <Text style={styles.chatText}>Hello, how can I help you?</Text>
-        </View>
-        <View style={styles.bottextview}>
-          <Text style={styles.chatText}>Hi there! I'm here to assist you.</Text>
-        </View>
-        {/* Add more chat messages as needed */}
+        {messages.map((message) => (
+          <View
+            key={message.id}
+            style={[
+              styles.messageView,
+              message.type === 'user' ? styles.userMessage : styles.botMessage,
+            ]}
+          >
+            <Text style={styles.chatText}>{message.text}</Text>
+          </View>
+        ))}
       </ScrollView>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           placeholder="Type your message..."
+          value={inputText}
+          onChangeText={(text) => setInputText(text)}
         />
-        <TouchableOpacity style={styles.sendButton}>
+        <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
           <Text style={styles.sendButtonText}>Send</Text>
         </TouchableOpacity>
       </View>
@@ -45,22 +90,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-  },
-  Navbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: 'blue',
-    padding: 10,
-  },
-  uimage: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-  },
-  settingsText: {
-    color: 'white',
-    fontSize: 16,
   },
   headerContainer: {
     backgroundColor: 'white',
@@ -77,21 +106,19 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 10,
   },
-  usertextview: {
-    backgroundColor: 'orange',
+  messageView: {
     padding: 10,
     borderRadius: 8,
-    alignSelf: 'flex-end',
     marginBottom: 10,
     maxWidth: '70%',
   },
-  bottextview: {
+  userMessage: {
+    backgroundColor: 'orange',
+    alignSelf: 'flex-end',
+  },
+  botMessage: {
     backgroundColor: '#2196F3',
-    padding: 10,
-    borderRadius: 8,
     alignSelf: 'flex-start',
-    marginBottom: 10,
-    maxWidth: '70%',
   },
   chatText: {
     color: 'white',
@@ -112,6 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 15,
     marginRight: 10,
+    color: 'black',
   },
   sendButton: {
     backgroundColor: 'blue',
